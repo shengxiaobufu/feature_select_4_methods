@@ -19,6 +19,7 @@ def find_best_n_features_ridge(n=8, out_path=''):
     clf.fit(x, y)
     print('During Ridge, the penalty parameter alpha is set as', clf.best_params_['C'])
     clf.best_estimator_.fit(x, y)
+    clf.best_estimator_.coef_ = np.abs(clf.best_estimator_.coef_)
 
     best_n = []
     # best_n_coef = []
@@ -28,6 +29,7 @@ def find_best_n_features_ridge(n=8, out_path=''):
         # best_n_coef.append(copy.deepcopy(clf.best_estimator_.coef_[:, best_position][0]))
         clf.best_estimator_.coef_[:, best_position] = np.nan
 
+    print('Selected Features:', best_n)
     best_features = x[:, best_n]
     print('Shape of features selected:', best_features.shape)
     best_features_with_label = pd.DataFrame(np.concatenate([best_features, y.reshape(len(y), 1)], axis=1))

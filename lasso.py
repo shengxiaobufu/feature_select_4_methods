@@ -42,6 +42,7 @@ def find_best_n_features_lasso(n=8, out_path='', max_iter=100):
 
     if retry == 11:
         print('Cound not find proper C, please try a lower dimension.')
+        return
 
     lasso = LogisticRegression(penalty='l1', class_weight='balanced', C=c_now)
     lasso.fit(x, y)
